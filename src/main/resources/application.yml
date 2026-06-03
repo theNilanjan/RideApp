@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ride-booking-system
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/ridedb}
+    username: ${SPRING_DATASOURCE_USERNAME:ride}
+    password: ${SPRING_DATASOURCE_PASSWORD:ride}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: ${SPRING_REDIS_PORT:6379}
+
+app:
+  jwt:
+    secret: ${APP_JWT_SECRET:change-me-change-me-change-me-change-me-change-me}
+    expiration-minutes: ${APP_JWT_EXPIRATION_MINUTES:120}
+  pricing:
+    base-fare: 45
+    per-km: 14
+    per-minute: 2
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
