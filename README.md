@@ -76,4 +76,13 @@ Ride updates are published to:
 
 ```text
 /topic/rides/{rideId}
+
+
+## Copyright
+
+© 2026 Nilanjan Ghosh. All rights reserved.
+
+This project and its source code are the intellectual property of Nilanjan Ghosh. Unauthorized copying, modification, distribution, or use of this software, in whole or in part, without prior written permission is prohibited.
+
+For permissions or inquiries, please contact the author.
 ```
