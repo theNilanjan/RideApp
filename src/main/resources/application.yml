@@ -1,13 +1,13 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 spring:
   application:
     name: ride-booking-system
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/ridedb}
-    username: ${SPRING_DATASOURCE_USERNAME:ride}
-    password: ${SPRING_DATASOURCE_PASSWORD:ride}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:ridedb}}
+    username: ${SPRING_DATASOURCE_USERNAME:${PGUSER:ride}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${PGPASSWORD:ride}}
   jpa:
     hibernate:
       ddl-auto: validate
@@ -19,8 +19,10 @@ spring:
     enabled: true
   data:
     redis:
-      host: ${SPRING_REDIS_HOST:localhost}
-      port: ${SPRING_REDIS_PORT:6379}
+      host: ${SPRING_REDIS_HOST:${REDISHOST:localhost}}
+      port: ${SPRING_REDIS_PORT:${REDISPORT:6379}}
+      username: ${SPRING_REDIS_USERNAME:${REDISUSER:}}
+      password: ${SPRING_REDIS_PASSWORD:${REDISPASSWORD:}}
 
 app:
   jwt:
