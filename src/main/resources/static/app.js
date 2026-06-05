@@ -43,7 +43,13 @@ async function api(path, options = {}) {
     const text = await response.text();
     const data = text ? JSON.parse(text) : null;
     if (!response.ok) {
-        const message = data?.message || data?.error || `Request failed with ${response.status}`;
+        const fieldErrors = data?.fields ? Object.entries(data.fields)
+            .map(([field, detail]) => `${field}: ${detail}`)
+            .join("; ") : "";
+        const message = [
+            data?.message || data?.error || `Request failed with ${response.status}`,
+            fieldErrors
+        ].filter(Boolean).join(" - ");
         throw new Error(message);
     }
     return data;
@@ -149,7 +155,7 @@ async function refreshRides() {
         return;
     }
 
-    const path = state.user.role === "DRIVER" ? "/api/v1/drivers/me/rides" : "/api/v1/rides/me";
+    const path = state.user.role === "ROLE_DRIVER" ? "/api/v1/drivers/me/rides" : "/api/v1/rides/me";
     const rides = await api(path);
     $("#ridesList").innerHTML = rides.length
         ? rides.map(rideMarkup).join("")

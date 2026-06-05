@@ -3,7 +3,7 @@ services:
     runtime: docker
     name: ride-booking-api
     plan: free
-    healthCheckPath: /swagger-ui.html
+    healthCheckPath: /
     envVars:
       - key: APP_JWT_SECRET
         generateValue: true

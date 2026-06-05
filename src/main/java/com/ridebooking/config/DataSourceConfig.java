@@ -17,17 +17,17 @@ public class DataSourceConfig {
     @Bean
     @Primary
     DataSource dataSource(Environment env) {
-        String url = firstText(env.getProperty("SPRING_DATASOURCE_URL"), env.getProperty("DATABASE_URL"));
-        String username = env.getProperty("SPRING_DATASOURCE_USERNAME");
-        String password = env.getProperty("SPRING_DATASOURCE_PASSWORD");
+        String url = firstText(System.getenv("SPRING_DATASOURCE_URL"), System.getenv("DATABASE_URL"));
+        String username = System.getenv("SPRING_DATASOURCE_USERNAME");
+        String password = System.getenv("SPRING_DATASOURCE_PASSWORD");
 
         if (!StringUtils.hasText(url)) {
-            String host = env.getProperty("PGHOST", "localhost");
-            String port = env.getProperty("PGPORT", "5432");
-            String database = env.getProperty("PGDATABASE", "ridedb");
+            String host = firstText(System.getenv("PGHOST"), env.getProperty("PGHOST", "localhost"));
+            String port = firstText(System.getenv("PGPORT"), env.getProperty("PGPORT", "5432"));
+            String database = firstText(System.getenv("PGDATABASE"), env.getProperty("PGDATABASE", "ridedb"));
             url = "jdbc:postgresql://" + host + ":" + port + "/" + database;
-            username = firstText(username, env.getProperty("PGUSER", "ride"));
-            password = firstText(password, env.getProperty("PGPASSWORD", "ride"));
+            username = firstText(username, firstText(System.getenv("PGUSER"), env.getProperty("PGUSER", "ride")));
+            password = firstText(password, firstText(System.getenv("PGPASSWORD"), env.getProperty("PGPASSWORD", "ride")));
         } else if (url.startsWith("postgres://") || url.startsWith("postgresql://")) {
             DatabaseUrl databaseUrl = parseDatabaseUrl(url);
             url = databaseUrl.jdbcUrl();
